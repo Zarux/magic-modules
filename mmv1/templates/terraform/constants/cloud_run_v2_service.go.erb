@@ -1,0 +1,8 @@
+func revisionNameCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, v interface{}) error {
+	autogen := diff.Get("autogenerate_revision_name").(bool)
+	if autogen && diff.HasChange("template.0.revision") {
+		return fmt.Errorf("google_cloud_run_v2_service: `template.revision` cannot be set while `autogenerate_revision_name` is true. Please remove the field or set `autogenerate_revision_name` to false.")
+	}
+
+	return nil
+}
